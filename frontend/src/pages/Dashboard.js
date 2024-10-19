@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   const fetchContacts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/contacts', {
+      const res = await axios.get('contact-management-deploy-apis.vercel.app/api/contacts', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setContacts(res.data);
@@ -28,7 +28,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this contact?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/contacts/${id}`, {
+        await axios.delete(`contact-management-deploy-apis.vercel.app/api/contacts/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchContacts();
@@ -60,7 +60,7 @@ const Dashboard = () => {
 
   const fetchDuplicates = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/contacts/duplicates', {
+      const res = await axios.get('contact-management-deploy-apis.vercel.app/api/contacts/duplicates', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDuplicates(res.data);
