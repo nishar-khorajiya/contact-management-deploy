@@ -21,7 +21,7 @@ const ImportExport = ({ fetchContacts }) => {
     formData.append('file', file);
 
     try {
-      await axios.post('http://localhost:5000/api/contacts/import', formData, {
+      await axios.post('contact-management-deploy-apis.vercel.app/api/contacts/import', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const ImportExport = ({ fetchContacts }) => {
 
   const handleExport = () => {
     axios
-      .get('http://localhost:5000/api/contacts/export', {
+      .get('contact-management-deploy-apis.vercel.app/api/contacts/export', {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       })
