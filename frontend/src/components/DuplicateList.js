@@ -16,7 +16,7 @@ const DuplicateList = ({ duplicates, fetchContacts }) => {
 
     try {
       await axios.post(
-        'http://localhost:5000/api/contacts/merge',
+        'contact-management-deploy-apis.vercel.app/api/contacts/merge',
         { primaryId, duplicateId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
