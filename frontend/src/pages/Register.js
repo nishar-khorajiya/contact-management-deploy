@@ -14,7 +14,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:5000/api/users/register', {
+      const res = await axios.post('contact-management-deploy-apis.vercel.app/api/users/register', {
         username,
         email,
         password,
