@@ -6,13 +6,13 @@ dotenv.config();
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI, {
+        await mongoose.connect('mongodb+srv://21CE057:Nis1933@cluster0.jsyov.mongodb.net/contact_management_db', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        console.log('MongoDB Connected');
+        // console.log('MongoDB Connected');
     } catch (error) {
-        console.error(error.message);
+        // console.error(error.message);
         process.exit(1);
     }
 };

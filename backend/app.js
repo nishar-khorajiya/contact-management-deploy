@@ -15,7 +15,13 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors());
+app.use(cors(
+  {
+    origin:["https://contact-management-deploy-api"],
+    methods:["POST","GET","PUT","DELETE"],
+    credentials:true
+  }
+));
 
 // Routes
 const userRoutes = require('./routes/userRoutes');
@@ -32,4 +38,4 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(5000);
