@@ -31,13 +31,11 @@ const ContactForm = ({ contact, handleClose, fetchContacts }) => {
       };
 
       if (contact) {
-        await axios.put(`contact-management-deploy-apis.vercel.app
-/api/contacts/${contact._id}`, contactData, {
+        await axios.put(`contact-management-deploy-apis.vercel.app/api/contacts/${contact._id}`, contactData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post('contact-management-deploy-apis.vercel.app
-/api/contacts', contactData, {
+        await axios.post('contact-management-deploy-apis.vercel.app/api/contacts', contactData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
