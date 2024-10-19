@@ -77,10 +77,9 @@ const updateContact = async (req, res) => {
 // DELETE /api/contacts/:id
 const deleteContact = async (req, res) => {
   try {
-    const contact = await Contact.findById(req.params.id);
-
-    if (contact && contact.user.toString() === req.user._id.toString()) {
-      await contact.remove();
+    const contact = await Contact.findByIdAndDelete(req.params.id);
+    
+    if (contact ) {
       res.json({ message: 'Contact removed' });
     } else {
       res.status(404).json({ message: 'Contact not found' });
@@ -93,34 +92,44 @@ const deleteContact = async (req, res) => {
 // Import contacts from VCF
 // POST /api/contacts/import
 const importContacts = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    const vcfData = req.file.buffer.toString();
-    const parsed = vCardParser.parse(vcfData);
-
-    const contacts = parsed.map((vcard) => {
-      const name = vcard.fn ? vcard.fn.value : 'No Name';
-      const email = vcard.email ? vcard.email.value : '';
-      const phone = vcard.tel ? vcard.tel.value : '';
-      return {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+      }
+  
+      const vcfData = req.file.buffer.toString();
+      let parsed;
+  
+      // Parse the VCF data
+      try {
+        parsed = vCardParser.parse(vcfData);
+        console.log('Parsed VCF data:', parsed); // Log the parsed data
+      } catch (parseError) {
+        console.error('Error parsing VCF data:', parseError);
+        return res.status(400).json({ message: 'Error parsing VCF data' });
+      }
+  
+      // Extract contact details directly from the parsed object
+      const contacts = [{
         user: req.user._id,
-        name,
-        email,
-        phone,
+        name: parsed.fn ? parsed.fn[0].value : 'No Name',
+        email: parsed.email ? parsed.email[0].value : '',
+        phone: parsed.tel ? parsed.tel[0].value : '',
         tags: [],
-      };
-    });
-
-    await Contact.insertMany(contacts);
-    res.status(201).json({ message: 'Contacts imported successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
+      }];
+  
+      console.log('Contacts to be inserted:', contacts);
+  
+      // Insert contacts into the database
+      await Contact.insertMany(contacts);
+      res.status(201).json({ message: 'Contacts imported successfully' });
+    } catch (error) {
+      console.error('Error importing contacts:', error);
+      res.status(500).json({ message: 'Server error', error: error.message });
+    }
+  };
+  
+  
 
 // Export contacts to VCF
 // GET /api/contacts/export
@@ -163,7 +172,6 @@ const findDuplicates = async (req, res) => {
         seen[key] = contact;
       }
     });
-
     res.json(duplicates);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -174,16 +182,14 @@ const findDuplicates = async (req, res) => {
 // POST /api/contacts/merge
 const mergeContacts = async (req, res) => {
   const { primaryId, duplicateId } = req.body;
-
+  console.log(primaryId,duplicateId)
   try {
     const primary = await Contact.findById(primaryId);
-    const duplicate = await Contact.findById(duplicateId);
+    const duplicate = await Contact.findByIdAndDelete(duplicateId);
 
     if (
       primary &&
-      duplicate &&
-      primary.user.toString() === req.user._id.toString() &&
-      duplicate.user.toString() === req.user._id.toString()
+      duplicate 
     ) {
       // Merge fields
       primary.email = primary.email || duplicate.email;
@@ -191,7 +197,7 @@ const mergeContacts = async (req, res) => {
       primary.tags = Array.from(new Set([...primary.tags, ...duplicate.tags]));
 
       await primary.save();
-      await duplicate.remove();
+    //   await duplicate.remove();
 
       res.json({ message: 'Contacts merged successfully', contact: primary });
     } else {
@@ -227,8 +233,7 @@ const searchContacts = async (req, res) => {
         const contacts = await Contact.find(searchCriteria); 
         res.json(contacts); 
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server Error' });
+       res.status(500).json({ message: 'Server Error' });
     }
 };
 

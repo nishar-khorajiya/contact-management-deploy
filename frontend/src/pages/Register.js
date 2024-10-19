@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, Button, Alert } from 'react-bootstrap';  // Added Alert for error handling
+import { Form, Button, Alert } from 'react-bootstrap'; 
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -8,7 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');  // State to handle errors
-  const navigate = useNavigate();  // Updated from useHistory to useNavigate
+  const navigate = useNavigate();  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

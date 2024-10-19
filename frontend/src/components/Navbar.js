@@ -14,7 +14,7 @@ const NavigationBar = () => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/" style={{ color: 'orange' }}>
           Contact Manager
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -24,10 +24,10 @@ const NavigationBar = () => {
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
               <>
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link as={Link} to="/login" style={{ color: 'white' }}>
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/register">  {/* New Register Link */}
+                <Nav.Link as={Link} to="/register" style={{ color: 'white' }}> 
                   Register
                 </Nav.Link>
               </>

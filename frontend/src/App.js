@@ -9,6 +9,7 @@ import Register from './pages/Register';
 function App() {
   return (
     <Router>
+      <div style={{backgroundColor:'#f0f0f0',minHeight: '100vh'}}>
       <Navbar />
       <div className="container mt-4">
         <Routes>
@@ -23,6 +24,7 @@ function App() {
             }
           />
         </Routes>
+      </div>
       </div>
     </Router>
   );

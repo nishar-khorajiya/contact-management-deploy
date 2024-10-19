@@ -14,13 +14,12 @@ const generateToken = (id) => {
 // Login user
 // route POST /api/users/login
 const loginUser = async (req, res) => {
-  const { username, password,email } = req.body;
+  const { username, password } = req.body;
 
   try {
     const user = await User.findOne({ username });
-    const user1 = await User.findOne({ email });
 
-    if ((user || user1 )&& (await user.matchPassword(password)||await user1.matchPassword(password))) {
+    if ((user )&& (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
         username: user.username,

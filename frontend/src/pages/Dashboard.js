@@ -72,7 +72,6 @@ const Dashboard = () => {
   useEffect(() => {
     fetchContacts();
     fetchDuplicates();
-    // eslint-disable-next-line
   }, []);
 
   return (

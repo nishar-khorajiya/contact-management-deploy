@@ -3,6 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +29,7 @@ const Login = () => {
   };
 
   return (
+    <div className="background-image">
     <div className="d-flex justify-content-center">
       <Form onSubmit={handleSubmit} style={{ width: '300px' }}>
         <h3 className="text-center">Login</h3>
@@ -58,6 +60,7 @@ const Login = () => {
           Login
         </Button>
       </Form>
+    </div>
     </div>
   );
 };
