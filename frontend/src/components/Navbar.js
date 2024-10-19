@@ -23,9 +23,14 @@ const NavigationBar = () => {
             {token ? (
               <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
             ) : (
-              <Nav.Link as={Link} to="/login">
-                Login
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">  {/* New Register Link */}
+                  Register
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

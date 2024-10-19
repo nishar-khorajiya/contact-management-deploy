@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div className="container mt-4">
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register/>} />
           <Route
             path="/"
             element={
